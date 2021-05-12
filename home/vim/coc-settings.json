@@ -1,0 +1,25 @@
+{
+	"languageserver": {
+		"ccls": {
+			"command": "ccls",
+			"filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
+			"rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
+			"initializationOptions": {
+				"cache": {
+				  "directory": "/tmp/ccls"
+				}
+			}
+		}
+	},
+	"snippets.textmateSnippetsRoots": ["/home/sleng/.config/coc/vscode/"],
+	"coc.source.file.ignorePatterns":[
+    	"**/.git/*",
+    	"*.swp",
+    	".vscode*",
+    	".ctags",
+    	"backup/"
+  	],
+	"list.source.files.excludePatterns": ["**/.git/*","/tmp/*"],
+	"list.source.grep.excludePatterns": ["**/.git/*","/tmp/*"],
+ 	"git.enableGutters": true
+}

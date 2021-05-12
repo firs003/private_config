@@ -1,0 +1,48 @@
+{
+  "L21udC9kL3NsZW5nL3Byb2plY3RzL29jbV9tb2RidXM=": [
+    "fancon.c",
+    "log_prox server.c",
+    "server.c",
+    ".c"
+  ],
+  "L2hvbWUvc2xlbmc=": [
+    "log_proxy.c",
+    "lorafan.c",
+    "fan.c",
+    "fancon.c",
+    "device",
+    "device_mgr.c:q",
+    "device_",
+    "mgr.c",
+    "coc",
+    "logproxyserver.c",
+    "server.c",
+    ".sample"
+  ],
+  "L2hvbWUvc2xlbmcvLmNvbmZpZy9jb2MvdWx0aXNuaXBz": [
+    "c."
+  ],
+  "L21udC9kL3NsZW5nL3Byb2plY3RzL2dhdGV3YXk=": [
+    "dev",
+    "devmgr",
+    "mgr.c"
+  ],
+  "L2hvbWUvc2xlbmcvLmNvbmZpZy9jb2M=": [
+    "mru"
+  ],
+  "L21udC9kL3NsZW5nL3Byb2plY3Rz": [
+    "log_proxy_server.c"
+  ],
+  "L21udC9kL3NsZW5nL3Byb2plY3RzL29jbV9tb2RidXMvY29tcC9sb2dfcHJveHkvc3Jj": [
+    "scri.mk",
+    "server.c",
+    "fancontrol.c"
+  ],
+  "L21udC9kL3NsZW5nL3Byb2plY3RzL29jbV9tb2RidXMvc2NyaXB0cw==": [
+    ".mk",
+    "ccls"
+  ],
+  "L21udC9kL3NsZW5nL3Byb2plY3RzL29jbV9tb2RidXMvY29tcC9xdWU=": [
+    "server.c"
+  ]
+}

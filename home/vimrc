@@ -1,0 +1,226 @@
+"source ~/.vim/plugin.vim
+set nocompatible              " be iMproved, required
+set vb t_vb=
+set nu
+set cindent
+set smartindent
+set hlsearch
+set showmatch
+set nowrap
+set backspace=indent,eol,start         " allow backspace over everything
+" color koehler
+" color molokai
+syntax enable
+colorscheme monokai
+set completeopt=preview,menu
+" set ruler
+" set nocompatible
+" syntax on
+set tabstop=4
+set shiftwidth=4
+set incsearch
+set ignorecase smartcase
+ 
+" ctags
+set autochdir
+set tags=./.tags;,.tags
+ 
+" Open file at the last position
+au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+ 
+filetype plugin indent on
+
+" filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+" set rtp+=~/.vim/bundle/Vundle.vim
+" call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+" call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+" Plugin 'VundleVim/Vundle.vim'
+
+" call vundle#end()            " required
+
+call plug#begin('~/.vim/bundle')
+
+Plug 'majutsushi/tagbar'
+let g:tagbar_ctags_bin = 'ctags' " tagbar 依赖 ctags 插件
+let g:tagbar_width     = 30      " 设置 tagbar 的宽度为 30 列，默认 40 列
+let g:tagbar_autofocus = 1       " 打开 tagbar 时光标在 tagbar 页面内，默认在 vim 打开的文件内
+let g:tagbar_left      = 0       " 让 tagbar 在页面左侧显示，默认右边
+"let g:tagbar_sort      = 0       " 标签不排序，默认排序
+" <leader>tb 打开 tagbar 窗口，在左侧栏显示
+let mapleader = "t"
+map <leader>b :TagbarToggle<CR>
+map <C-R> :TagbarToggle<CR>
+
+
+Plug 'preservim/nerdtree'
+" Start NERDTree and put the cursor back in the other window.
+autocmd VimEnter * NERDTree | wincmd p
+" Exit Vim if NERDTree is the only window left.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+" 当打开 VIM没有指定文件时和打开一个目录时打开 NERDTree
+autocmd StdinReadPre * let s:std_in = 1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+let NERDTreeHighlightCursorline = 1       " 高亮当前行
+let NERDTreeShowLineNumbers     = 1       " 显示行号
+let NERDTreeShowLineNumbers     = 1       " 显示行号
+" 忽略列表中的文件
+let NERDTreeIgnore = [ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.egg$', '^\.git$', '^\.repo$', '^\.svn$', '^\.hg$', '^\.vscode$', '^\.backup$' ]
+
+
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+" nnoremap <C-p> :Leaderf file --popup<CR>
+" nnoremap <C-p> <ESC>:Leaderf file --popup<CR>
+let g:Lf_WorkingDirectoryMode = 'Ac'
+let g:Lf_ShortcutF = '<C-P>'
+" let g:Lf_WindowPosition = 'popup'
+let g:Lf_WindowHeight = 0.2
+let g:Lf_PreviewInPopup = 1
+let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
+let g:Lf_PreviewResult = {'Rg': 1, 'Line': 1}
+let mapleader = "m"
+noremap <leader>s :<C-U><C-R>=printf("Leaderf file %s", "")<CR><CR>
+noremap <leader>f :<C-U><C-R>=printf("Leaderf function %s", "")<CR><CR>
+noremap <leader>b :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
+noremap <leader>r :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+noremap <leader>t :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
+noremap <leader>n :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
+
+noremap <F3> :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR><CR>
+noremap go :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR><CR>
+noremap re :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR><CR>
+" search visually selected text literally
+xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
+noremap gr :<C-U>Leaderf! rg --recall<CR>
+
+" should use `Leaderf gtags --update` first
+let g:Lf_GtagsAutoGenerate = 0
+let g:Lf_Gtagslabel = 'native-pygments'
+noremap <leader>m :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
+noremap <leader>d :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
+noremap <leader>o :<C-U><C-R>=printf("Leaderf! gtags --recall %s", "")<CR><CR>
+noremap <leader>n :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
+noremap <leader>p :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
+
+
+" Use release branch (recommend)
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+" nnoremap <C-p> :CocList files<CR>
+" inoremap <C-p> <ESC>:CocList files<CR>
+
+Plug 'vim-airline/vim-airline'
+let g:airline_powerline_fonts                   = 1 " 使用 powerline 打过补丁的字体
+let g:airline#extensions#tabline#enabled        = 1 " 开启 tabline
+let g:airline#extensions#tabline#buffer_nr_show = 1 " 显示 buffer 编号
+let g:airline#extensions#ale#enabled            = 1 " enable ale integration
+" 状态栏显示图标设置
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_left_sep          = '⮀'
+let g:airline_left_alt_sep      = '⮁'
+let g:airline_right_sep         = '⮂'
+let g:airline_right_alt_sep     = '⮃'
+let g:airline_symbols.crypt     = '?'
+let g:airline_symbols.linenr    = '⭡'
+let g:airline_symbols.branch    = '⭠'
+" 切换 buffer
+nnoremap [b :bp<CR>
+nnoremap ]b :bn<CR>
+" 关闭当前 buffer
+noremap <C-x> :w<CR>:bd<CR>
+noremap bc :w<CR>:bd<CR>
+noremap bx :w<CR>:bd<CR>
+" <leader>1~9 切到 buffer1~9
+let mapleader = "b"
+map <leader>1 :b 1<CR>
+map <leader>2 :b 2<CR>
+map <leader>3 :b 3<CR>
+map <leader>4 :b 4<CR>
+map <leader>5 :b 5<CR>
+map <leader>6 :b 6<CR>
+map <leader>7 :b 7<CR>
+map <leader>8 :b 8<CR>
+map <leader>9 :b 9<CR>
+
+" Plug 'sickill/vim-monokai'
+Plug 'SirVer/ultisnips'
+let g:UltiSnipsExpandTrigger       = "<tab>"       " 代码片段补全触发
+let g:UltiSnipsListSnippets        = "<c-\>"       " 列出补全可选列表
+" let g:UltiSnipsJumpForwardTrigger  = "<c-j>"       " 下一条补全
+let g:UltiSnipsJumpForwardTrigger  = "<tab>"       " 下一条补全
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"       " 上一条补全
+let g:UltiSnipsEditSplit           = "vertical"    " how the edit window is opened
+
+Plug 'honza/vim-snippets'
+
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
+Plug 'preservim/nerdcommenter'
+set nocompatible
+" Create default mappings
+" let g:NERDCreateDefaultMappings = 1
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+" let g:NERDDefaultAlign = 'left'
+let g:NERDCustomDelimiters = { 'c': { 'left': '//','right': '' } }
+let mapleader = "c"
+map <C-/> <Plug>NERDCommenterToggle
+map <leader>c <Plug>NERDCommenterToggle
+map <leader>m <plug>NERDCommenterComment
+map <leader>u <plug>NERDCommenterUncomment
+
+Plug 'sbdchd/neoformat'
+let g:neoformat_c_clangformat = {
+	\ 'ext': 'clang-format',
+	\ 'args': ['-style=\"{BasedOnStyle: llvm, IndentWidth: 4}\"', '-assume-filename=' . expand('%:t')],
+	\ 'stdin': 1,
+	\}
+let g:neoformat_enalbed_c = ['clangformat']
+
+Plug 'tpope/vim-fugitive'
+
+call plug#end()
+
+
+" User hotkeys
+inoremap ; <END>;
+inoremap <M-.> ->
+nnoremap <M-j> <C-]>
+nnoremap <M-k> <C-o>
+nnoremap <f1> <C-]>
+nnoremap <f2> <C-o>
+map <C-y> <ESC>:redo<CR>
+" <leader>tc 关闭当前的 tab
+let mapleader = "t"
+map <leader>c :tabc<CR>
+" <leader>to 关闭所有其他的 tab
+map <leader>o :tabo<CR>
+" <leader>ts 查看所有打开的 tab
+map <leader>s :tabs<CR>
+" <leader>tp 前一个 tab
+map <leader>p :tabp<CR>
+" <leader>tn 后一个 tab
+map <leader>n :tabn<CR>
+inoremap <C-j> <C-n>
+inoremap <C-k> <C-p>
+nnoremap L $
+nnoremap H ^
